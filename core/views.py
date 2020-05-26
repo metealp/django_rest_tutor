@@ -12,23 +12,23 @@ from .serializers import PostSerializer
 from .models import Post
 
 
-class TestView(APIView):
+# class TestView(APIView):
 
-    permission_classes = (IsAuthenticated, )
+#     permission_classes = (IsAuthenticated, )
 
-    def get(self, request, *args, **kwargs):
-        qs = Post.objects.all()
-        post = qs.first()
-        # serializer = PostSerializer(qs, many=True)
-        serializer = PostSerializer(post)
-        return Response(serializer.data)
+#     def get(self, request, *args, **kwargs):
+#         qs = Post.objects.all()
+#         post = qs.first()
+#         # serializer = PostSerializer(qs, many=True)
+#         serializer = PostSerializer(post)
+#         return Response(serializer.data)
 
-    def post(self, request, *args, **kwargs):
-        serializer = PostSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+#     def post(self, request, *args, **kwargs):
+#         serializer = PostSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors)
 
 
 class PostView(
@@ -50,7 +50,8 @@ class PostCreateView(mixins.ListModelMixin, generics.CreateAPIView):
     queryset = Post.objects.all()
 
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        #used ListModelMixing method for serialize, filter and pagination features
+        return self.list(request, *args, **kwargs) 
 
 
 class PostListCreateView(generics.ListCreateAPIView):
